@@ -1,0 +1,1228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>North County Rental Shortlist</title>
+<style>html{color-scheme:light dark}body{margin:0;font:14px -apple-system,system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>
+(function(){
+  var cutoff = Date.UTC(2026, 9, 21); // expires Oct 21, 2026
+  if (Date.now() > cutoff) {
+    document.documentElement.innerHTML = '<head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>Expired</title></head><body style="font-family:-apple-system,Helvetica,Arial;padding:40px 20px;color:#333"><h1 style="font-size:22px">This shortlist has expired</h1><p>It was a one-week snapshot of rental listings from October 13, 2026. Ask Austin for a fresh copy.</p></body>';
+  }
+})();
+</script>
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: one reading column; every section and every home is a collapsible card. */
+:root {
+  --bg: #f4f5f7; --surface: #ffffff; --fg: #18222e; --muted: #5d6673; --line: #d9dee5;
+  --accent: #0e5aa7; --money: #0f7a4d; --warn: #a35426; --chip: #eaeef3; --top: #18222e; --okbg: #e6f4ec; --warnbg: #f8ece3;
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "Source Sans 3", -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #12171d; --surface: #1a2129; --fg: #e8ecf1; --muted: #9aa6b4; --line: #2c3540; --accent: #7fb4ee; --money: #5fcf98; --warn: #e3a070; --chip: #242d37; --top: #e8ecf1; --okbg: #163826; --warnbg: #3b2718; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #12171d; --surface: #1a2129; --fg: #e8ecf1; --muted: #9aa6b4; --line: #2c3540; --accent: #7fb4ee; --money: #5fcf98; --warn: #e3a070; --chip: #242d37; --top: #e8ecf1; --okbg: #163826; --warnbg: #3b2718; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.42; }
+.wrap { max-width: 680px; margin: 0 auto; padding-block: 22px 60px; padding-inline: 16px; }
+a { color: var(--accent); text-decoration: none; }
+a:focus-visible, summary:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1 { font-family: var(--display); font-weight: 500; font-size: clamp(28px, 6vw, 36px); line-height: 1.1; margin: 0 0 6px; letter-spacing: -0.01em; text-wrap: balance; }
+.meta { color: var(--muted); font-size: 15px; }
+details { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); margin-top: 12px; }
+details > summary { list-style: none; cursor: pointer; padding: 12px 14px; display: flex; gap: 12px; align-items: center; }
+details > summary::-webkit-details-marker { display: none; }
+details.section > summary { font-family: var(--display); font-size: 21px; font-weight: 500; }
+details.section > summary .count { margin-left: auto; font-family: var(--body); font-size: 13px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+details.section > summary::after, details.home > summary::after { content: "+"; font-family: var(--body); font-size: 20px; color: var(--muted); margin-left: 6px; width: 16px; text-align: center; flex: 0 0 auto; }
+details[open] > summary::after { content: "\2212"; }
+details.section > summary::after { margin-left: 8px; }
+.section-body { padding: 0 12px 12px; }
+.intro { color: var(--muted); font-size: 15px; margin: 0 0 4px; }
+details.home { margin-top: 10px; border-radius: 12px; }
+details.home.top { border-color: var(--top); border-width: 1.5px; }
+details.home > summary { padding: 10px; align-items: flex-start; }
+.thumb { flex: 0 0 104px; width: 104px; height: 78px; object-fit: cover; border-radius: 8px; background: var(--chip); }
+.sum { min-width: 0; flex: 1 1 auto; }
+.badge { display: inline-block; background: var(--top); color: var(--bg); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; margin-bottom: 3px; }
+.badge.alt { background: var(--muted); }
+.badge.over { background: var(--warn); }
+.addr { font-weight: 700; font-size: 16.5px; line-height: 1.25; }
+.area { color: var(--muted); font-size: 13px; margin-top: 1px; }
+.price { font-size: 18px; font-weight: 700; color: var(--money); margin-top: 3px; font-variant-numeric: tabular-nums; }
+.price.over { color: var(--warn); }
+.price .note { font-size: 12.5px; font-weight: 400; color: var(--muted); margin-left: 5px; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px 6px; margin-top: 5px; }
+.chip { font-size: 12.5px; background: var(--chip); border-radius: 999px; padding: 2px 9px; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.chip.ok { background: var(--okbg); color: var(--money); font-weight: 600; }
+.chip.warn { background: var(--warnbg); color: var(--warn); font-weight: 600; }
+.body { padding: 0 12px 12px; }
+.photos { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 4px; margin-top: 2px; }
+.photos img { flex: 0 0 86%; max-width: 86%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; scroll-snap-align: start; background: var(--chip); }
+.photos img:only-child { flex-basis: 100%; max-width: 100%; }
+.specs { font-size: 15px; margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 8px; margin-top: 8px; font-size: 14px; }
+.facts div { background: var(--chip); border-radius: 6px; padding: 6px 8px; min-width: 0; }
+.facts b { font-weight: 600; }
+.facts .good b { color: var(--money); }
+.facts .warn b { color: var(--warn); }
+.lbl { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
+.lbl.watch { color: var(--warn); }
+ul.pts { margin: 4px 0 0; padding-left: 20px; font-size: 15px; }
+ul.pts li { margin: 3px 0; }
+.links { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+.links a { background: var(--chip); border-radius: 8px; padding: 7px 11px; font-weight: 600; font-size: 14px; }
+.contact { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
+.filters { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding: 10px 0 8px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filters button { font: inherit; font-size: 14px; font-weight: 600; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--top); color: var(--bg); border-color: var(--top); }
+.filters .hint { color: var(--muted); font-size: 13px; flex-basis: 100%; }
+.hidden-by-filter { display: none; }
+.crit { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-top: 14px; font-size: 15px; }
+.crit b { display: block; margin-bottom: 4px; }
+.crit ul { margin: 0; padding-left: 20px; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 520px; }
+th { text-align: left; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--line); padding: 6px 8px; }
+td { border-bottom: 1px solid var(--line); padding: 7px 8px; vertical-align: top; }
+.tips ul { padding-left: 20px; font-size: 15px; }
+.tips li { margin: 6px 0; }
+.method { color: var(--muted); font-size: 13.5px; margin-top: 14px; }
+.empty { color: var(--muted); font-size: 14px; padding: 10px 2px; display: none; }
+@media (max-width: 400px) { .thumb { flex-basis: 88px; width: 88px; height: 66px; } .facts { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .photos { scroll-behavior: auto; } }
+</style>
+<div class="wrap">
+
+<h1>Rental shortlist: Calavera Hills &amp; San Elijo Hills</h1>
+<div class="meta">3+ bedroom houses with a garage, one dog welcome, under about $4,600 a month</div>
+<div class="meta">Researched and verified Oct 13, 2026</div>
+<div class="filters" role="group" aria-label="Filters">
+  <button type="button" data-f="dogs" aria-pressed="false">Dog clearly OK</button>
+  <button type="button" data-f="detached" aria-pressed="false">Detached houses</button>
+  <button type="button" data-f="now" aria-pressed="false">Available now</button>
+  <span class="hint">Tap a home to expand it. Tap a section title to open or close the whole group.</span>
+</div>
+<details class="crit-wrap"><summary><b>What we looked for, and how to read this</b></summary>
+<div class="section-body"><div class="crit"><ul><li>3 or more bedrooms, a real garage, a dog allowed, rent at or under about $4,600</li><li>Near Calavera Hills (Carlsbad 92010) or San Elijo Hills (San Marcos 92078). Distances are straight-line miles to each.</li><li>Every listing below was re-checked on Oct 13 against a source we could read directly (the manager&#x27;s own site, the MLS feed, Craigslist, Apartments.com, Zillow or Trulia). Anything marked no pets, no garage, or already rented was cut; those are listed at the end.</li></ul></div><div class="crit">Top picks come first, then detached houses that are a step behind, then townhomes with 2-car garages. &quot;Small dogs only&quot; is the listing&#x27;s own wording; none of them publish a weight cutoff, so one phone call with the dog&#x27;s breed and weight settles it. Prices are base rent unless noted.</div></div></details>
+<details class="section" open id="top"><summary>Top picks<span class="count">9 of 9</span></summary><div class="section-body"><p class="intro">Dog welcome or realistically negotiable, real garage, under budget, and close to one of the two neighborhoods.</p><div class="empty">Nothing in this group matches the filters.</div>
+<details class="home top" data-dogs="yes" data-detached="1" data-now="1" id="mira-costa">
+  <summary>
+    <img class="thumb" src="photos/mira-costa-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#1</span>
+      <div class="addr">4023 Mira Costa St, Oceanside 92056</div>
+      <div class="area">Tri-City Oceanside on the Carlsbad line, 0.7 mi to Calavera Hills Community Park</div>
+      <div class="price">$4,200/mo<span class="note">deposit $4,200, 12-month lease</span></div>
+      <div class="chips"><span class="chip ok">Dog: Yes, dogs and cats</span><span class="chip ">Garage: Attached, possibly 1-car</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/mira-costa-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/mira-costa-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/mira-costa-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/mira-costa-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd</span><span>2 ba</span><span>1,650 sq ft</span><span>Detached single-story house</span></div>
+    <div class="facts"><div class="good"><b>Dog:</b> Yes, dogs and cats (owner screens each pet)</div><div class=""><b>Garage:</b> Attached, possibly 1-car. Ask.</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 0.7 mi Calavera · 7.4 mi San Elijo</div><div class=""><b>Outdoor:</b> Backyard redone with patio and a 15 x 30 ft turf lawn</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Fully renovated this summer: quartz kitchen, remodeled baths, new carpet, paint and gutters</li><li>Zoned for Carlsbad Unified (Calavera Hills Elementary and Middle, Carlsbad High)</li><li>No extra monthly fees; by-owner listing with a one-month deposit</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Only one garage door shows in the photos. Confirm how many cars fit and whether a bedroom is a converted garage.</li><li>Pet deposit and pet rent are not published. Screening is 3x income and 620+ credit.</li></ul>
+    <div class="links"><a href="https://sandiego.craigslist.org/nsd/apa/d/oceanside/7980392457.html" target="_blank" rel="noopener">Craigslist</a><a href="https://www.apartments.com/4023-mira-costa-st-oceanside-ca/z8l4xhy/" target="_blank" rel="noopener">Apartments.com</a><a href="https://www.zillow.com/homedetails/52505732_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">For rent by owner. Reply through Craigslist or Apartments.com; the owner sends a pre-screen form.</div>
+  </div>
+</details>
+<details class="home top" data-dogs="cbc" data-detached="1" data-now="1" id="lake-4101">
+  <summary>
+    <img class="thumb" src="photos/lake-4101-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#2</span>
+      <div class="addr">4101 Lake Blvd, Oceanside 92056</div>
+      <div class="area">Tri-City Oceanside near Lake Calavera, 0.9 mi to Calavera Hills</div>
+      <div class="price">$3,495/mo<span class="note">gardener included, deposit $3,495</span></div>
+      <div class="chips"><span class="chip ">Dog: Dog or cat considered, $300 one-time deposit each, no pet rent listed</span><span class="chip ">Garage: 1-car attached plus a 2-car private driveway</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/lake-4101-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/lake-4101-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/lake-4101-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/lake-4101-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>1.5 ba</span><span>1,280 sq ft</span><span>2-story house</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Dog or cat considered, $300 one-time deposit each, no pet rent listed</div><div class=""><b>Garage:</b> 1-car attached plus a 2-car private driveway</div><div class=""><b>Available:</b> Now (rent prorated before Nov 1)</div><div class=""><b>Distance:</b> 0.9 mi Calavera · 7.3 mi San Elijo</div><div class=""><b>Outdoor:</b> Large fenced backyard with covered deck and patio</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>About $1,100 under budget for a remodeled house with central AC and in-unit laundry</li><li>Listing says Carlsbad Unified: Calavera Hills Elementary and Middle, Sage Creek High</li><li>One bedroom has its own 15 x 11 ft balcony</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Only 1.5 baths and 1,280 sq ft; two bedrooms are about 10 x 10</li><li>The garage fits one car; the other two park in the driveway</li><li>Fronts Lake Blvd, a busier road</li></ul>
+    <div class="links"><a href="https://www.craigslist.org/view/d/oceanside-carlsbad-schools-ac-yard/msp2QHvQ5zMaBPwKFXTdTX" target="_blank" rel="noopener">Craigslist</a><a href="https://www.zillow.com/homedetails/16621480_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">For rent by owner. Text through the Craigslist post with household size, move-in date and pet details.</div>
+  </div>
+</details>
+<details class="home top" data-dogs="yes" data-detached="1" data-now="1" id="genine">
+  <summary>
+    <img class="thumb" src="photos/genine-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#3</span>
+      <div class="addr">4009 Genine Dr, Oceanside 92056</div>
+      <div class="area">Tri-City Oceanside, 1.4 mi to Calavera Hills</div>
+      <div class="price">$4,500/mo<span class="note">deposit $4,500, landscaping included</span></div>
+      <div class="chips"><span class="chip ok">Dog: Yes</span><span class="chip ">Garage: 2-car plus driveway</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/genine-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/genine-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/genine-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/genine-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd</span><span>2 ba</span><span>1,260 sq ft</span><span>Detached single-story house on a corner lot</span></div>
+    <div class="facts"><div class="good"><b>Dog:</b> Yes (the manager&#x27;s own listing accepts dogs; no written terms yet)</div><div class=""><b>Garage:</b> 2-car plus driveway</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 1.4 mi Calavera · 7.8 mi San Elijo</div><div class=""><b>Outdoor:</b> Large backyard with covered patio and fruit trees on a 7,600 sq ft lot</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Remodeled: island kitchen, stainless appliances, central AC, full solar</li><li>Listed by Seabird Property Management with an online application</li><li>Live on three independent sources on Oct 13</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>1,260 sq ft for 4 bedrooms means small rooms</li><li>Pet deposit, pet rent and size limits are not published; 680+ credit and 2.5x income required</li><li>Vista Unified schools, not Carlsbad</li></ul>
+    <div class="links"><a href="https://www.zillow.com/homedetails/16616601_zpid/" target="_blank" rel="noopener">Zillow</a><a href="https://www.zumper.com/apartments-for-rent/65471874" target="_blank" rel="noopener">Zumper</a></div>
+    <div class="contact">Seabird Property Management, (760) 658-9000</div>
+  </div>
+</details>
+<details class="home top" data-dogs="small" data-detached="1" data-now="0" id="hampton">
+  <summary>
+    <img class="thumb" src="photos/hampton-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#4</span>
+      <div class="addr">1316 Hampton Rd, San Marcos 92078</div>
+      <div class="area">Village of Hampton Hill near Lake San Marcos, 2.0 mi to San Elijo Hills</div>
+      <div class="price">$3,950/mo<span class="note">HOA dues included, deposit $3,950</span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs per Zillow and Trulia</span><span class="chip ">Garage: 2-car attached with opener and shelving</span><span class="chip ">Dec 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/hampton-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/hampton-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/hampton-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/hampton-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2.5 ba</span><span>1,556 sq ft</span><span>Detached 2-story house</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs per Zillow and Trulia; the MLS feed says dogs OK with no limits. Ask.</div><div class=""><b>Garage:</b> 2-car attached with opener and shelving</div><div class=""><b>Available:</b> Dec 1</div><div class=""><b>Distance:</b> 2.0 mi San Elijo · 5.9 mi Calavera</div><div class=""><b>Outdoor:</b> Fenced backyard with a gate onto a private community greenbelt</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Best dog setup on the list: fenced yard that opens onto a greenbelt, plus a community pool</li><li>Listed Oct 12 on the MLS by a named agent, with 2-car garage confirmed</li><li>About $650 under budget with HOA covered</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Not available until Dec 1</li><li>Confirm the dog-size rule before paying an application fee</li></ul>
+    <div class="links"><a href="https://www.trulia.com/home/1316-hampton-rd-san-marcos-ca-92078-16675076" target="_blank" rel="noopener">Trulia</a><a href="https://www.realtor.com/rentals/details/1316-Hampton-Rd_San-Marcos_CA_92078_M29110-82555" target="_blank" rel="noopener">Realtor.com</a><a href="https://www.zillow.com/homedetails/16675076_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">Kim Babcock, Real Brokerage, (760) 315-2292</div>
+  </div>
+</details>
+<details class="home top" data-dogs="small" data-detached="1" data-now="1" id="chert">
+  <summary>
+    <img class="thumb" src="photos/chert-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#5</span>
+      <div class="addr">1455 Chert Dr, San Marcos 92078</div>
+      <div class="area">San Elijo Hills, gated Belmont community, 0.9 mi to the town center</div>
+      <div class="price">$4,295/mo<span class="note">owner pays HOA, deposit $4,295, $500 one-time pet fee</span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs and cats only</span><span class="chip ">Garage: 2-car attached with EV charger</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/chert-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/chert-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/chert-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/chert-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd</span><span>3 ba</span><span>1,786 sq ft</span><span>Detached 2-story house</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs and cats only (no weight limit published)</div><div class=""><b>Garage:</b> 2-car attached with EV charger</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 0.9 mi San Elijo · 8.4 mi Calavera</div><div class=""><b>Outdoor:</b> Easy-maintenance backyard (size not stated)</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>The only detached house inside San Elijo Hills on the market in budget</li><li>Bedroom and full bath downstairs; 2025 carpet, cabinets and paint; central AC, tankless water heater</li><li>Community pool, spa and BBQ; San Elijo schools</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Small dogs only is the listing&#x27;s rule; ask what counts as small</li><li>Compact at 1,786 sq ft for 4 bedrooms; tenant pays all utilities</li></ul>
+    <div class="links"><a href="https://www.trulia.com/home/1455-chert-dr-san-marcos-ca-92078-120790013" target="_blank" rel="noopener">Trulia</a><a href="https://www.zillow.com/homedetails/120790013_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">Private owner. Request a tour or apply through the Zillow or Trulia listing.</div>
+  </div>
+</details>
+<details class="home top" data-dogs="cbc" data-detached="1" data-now="1" id="canary-ct">
+  <summary>
+    <img class="thumb" src="photos/canary-ct-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#6</span>
+      <div class="addr">1136 Canary Ct, San Marcos 92078</div>
+      <div class="area">Lake San Marcos, dead-end court, 0.8 mi to San Elijo Hills</div>
+      <div class="price">$3,450/mo<span class="note">tenant pays utilities; fees not published</span></div>
+      <div class="chips"><span class="chip ">Dog: Tagged pet friendly, but no written policy. Call</span><span class="chip ">Garage: 2-car</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/canary-ct-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2 ba</span><span>1,519 sq ft</span><span>Detached single-story house, built about 1976</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Tagged pet friendly, but no written policy. Call.</div><div class=""><b>Garage:</b> 2-car (confirmed by county record) plus off-street parking</div><div class=""><b>Available:</b> Now (listing updated Oct 13)</div><div class=""><b>Distance:</b> 0.8 mi San Elijo · 7.0 mi Calavera</div><div class=""><b>Outdoor:</b> Fenced rear yard</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Lowest rent for a detached house with a garage and fenced yard this close to San Elijo Hills</li><li>Single level with a fireplace, tile in the common areas and new bedroom carpet</li><li>Managed by Lawrence and Associates, a local property manager</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Thin listing: one photo from 2022 and no pet terms, so tour it before applying</li><li>Listing says 1,900 sq ft; the county record says 1,519</li></ul>
+    <div class="links"><a href="https://www.rentcafe.com/apartments/ca/san-marcos/1136-canary-court/default.aspx" target="_blank" rel="noopener">RentCafe</a></div>
+    <div class="contact">Lawrence and Associates leasing, (760) 232-6609</div>
+  </div>
+</details>
+<details class="home top" data-dogs="cbc" data-detached="1" data-now="0" id="hillhaven">
+  <summary>
+    <img class="thumb" src="photos/hillhaven-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#7</span>
+      <div class="addr">635 Hillhaven Dr, San Marcos 92078</div>
+      <div class="area">California Showcase, west San Marcos near Hwy 78, 2.3 mi to San Elijo Hills</div>
+      <div class="price">$4,350/mo<span class="note">deposit $4,350, $45 application fee per adult</span></div>
+      <div class="chips"><span class="chip ">Dog: Pets on approval</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Nov 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/hillhaven-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/hillhaven-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/hillhaven-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/hillhaven-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2.5 ba</span><span>1,510 sq ft</span><span>Detached 2-story house, built 1996</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Pets on approval (no terms published)</div><div class=""><b>Garage:</b> 2-car attached (county record and photos)</div><div class=""><b>Available:</b> Nov 1</div><div class=""><b>Distance:</b> 2.3 mi San Elijo · 5.5 mi Calavera</div><div class=""><b>Outdoor:</b> Private backyard with patio, decking, pergola and citrus trees</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Live on PropertyADVANTAGE&#x27;s own site, a licensed local manager</li><li>Vaulted ceilings and a separate laundry room; fresh paint and new upstairs flooring going in now</li><li>Minutes to Hwy 78 and Cal State San Marcos</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Current photos predate the refresh</li><li>Get the dog approved in writing; deposit and pet rent are not listed</li></ul>
+    <div class="links"><a href="https://propertyadvantage.appfolio.com/listings/detail/e061f3b6-4d05-4b27-b5ac-2a49e55f0520" target="_blank" rel="noopener">PropertyADVANTAGE</a><a href="https://www.apartments.com/635-hillhaven-dr-san-marcos-ca/rl7dkb2/" target="_blank" rel="noopener">Apartments.com</a></div>
+    <div class="contact">PropertyADVANTAGE, (760) 585-1755</div>
+  </div>
+</details>
+<details class="home top" data-dogs="yes" data-detached="0" data-now="1" id="durango-2290">
+  <summary>
+    <img class="thumb" src="photos/durango-2290-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#8</span>
+      <div class="addr">2290 Durango Way, San Marcos 92078</div>
+      <div class="area">Laurel at Old Creek Ranch, next to San Elijo Park and its dog park, 2.1 mi to San Elijo Hills</div>
+      <div class="price">$4,100/mo<span class="note">water and trash included, deposit $4,100</span></div>
+      <div class="chips"><span class="chip ok">Dog: Yes on the manager&#x27;s site</span><span class="chip ">Garage: 2-car attached with extra storage</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/durango-2290-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/durango-2290-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/durango-2290-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2.5 ba</span><span>1,650 sq ft</span><span>Twin home (one shared wall) with loft</span></div>
+    <div class="facts"><div class="good"><b>Dog:</b> Yes on the manager&#x27;s site (large-dog category); the Zillow feed says small. Ask.</div><div class=""><b>Garage:</b> 2-car attached with extra storage</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 2.1 mi San Elijo · 6.4 mi Calavera</div><div class=""><b>Outdoor:</b> Patio only; community pool</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Managed by Mills Management Services with its own application process</li><li>Loft plus 3 bedrooms; about $500 under budget with water and trash covered</li><li>Off-leash dog park at San Elijo Park next door</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Shares one wall with the neighbor and has a patio rather than a yard</li><li>Lease term not stated</li></ul>
+    <div class="links"><a href="https://millsms.appfolio.com/listings/detail/61b12a80-3741-484d-b601-00b3e40eb1b4" target="_blank" rel="noopener">Mills Management</a><a href="https://www.trulia.com/home/2290-durango-way-san-marcos-ca-92078-120796428" target="_blank" rel="noopener">Trulia</a></div>
+    <div class="contact">Mills Management Services, (760) 978-9609</div>
+  </div>
+</details>
+<details class="home top" data-dogs="cbc" data-detached="1" data-now="1" id="saratoga">
+  <summary>
+    <img class="thumb" src="photos/saratoga-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge">#9</span>
+      <div class="addr">251 Saratoga Ct, Vista 92083</div>
+      <div class="area">Laurel Creek, west Vista near Hwy 78, 2.2 mi to Calavera Hills</div>
+      <div class="price">$4,295/mo<span class="note">deposit $4,295 (Zillow shows $4,250)</span></div>
+      <div class="chips"><span class="chip ">Dog: Owner writes &quot;pets considered with owner approval&quot;, but the form fields say no pets. Get a written yes first</span><span class="chip ">Garage: 2-car attached, EV charging</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/saratoga-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/saratoga-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/saratoga-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/saratoga-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2.5 ba</span><span>1,777 sq ft</span><span>Detached house built 2020, 3 bedrooms plus loft</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Owner writes &quot;pets considered with owner approval&quot;, but the form fields say no pets. Get a written yes first.</div><div class=""><b>Garage:</b> 2-car attached, EV charging</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 2.2 mi Calavera · 7.4 mi San Elijo</div><div class=""><b>Outdoor:</b> Fenced backyard with private jacuzzi, patio and a plum tree</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Newest detached house on the list: owned solar, tankless water heater, quartz kitchen, walk-in pantry</li><li>Security system, fire sprinklers, Samsung washer and dryer included</li><li>Community clubhouse, walking paths and spa</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>The dog-policy conflict is the whole question here</li><li>Vista Unified schools</li></ul>
+    <div class="links"><a href="https://rental.turbotenant.com/p/251-saratoga-ct-vista-ca/4c332ea5-37fb-48fd-8958-187cf4407f70" target="_blank" rel="noopener">TurboTenant</a><a href="https://sandiego.craigslist.org/nsd/apa/d/oceanside-newer-detached-vista-home/7972103418.html" target="_blank" rel="noopener">Craigslist</a><a href="https://www.zillow.com/homedetails/333878531_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">Owner, Tom Tran, (858) 926-8829</div>
+  </div>
+</details></div></details>
+<details class="section" id="alts"><summary>Detached houses a step behind<span class="count">11 of 11</span></summary><div class="section-body"><p class="intro">Good homes with one real catch each: a dog-size limit, an unstated pet policy, distance, or a date.</p><div class="empty">Nothing in this group matches the filters.</div>
+<details class="home " data-dogs="small" data-detached="1" data-now="1" id="lake-4077">
+  <summary>
+    <img class="thumb" src="photos/lake-4077-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Cheapest</span>
+      <div class="addr">4077 Lake Blvd, Oceanside 92056</div>
+      <div class="area">Tri-City Oceanside, 0.9 mi to Calavera Hills</div>
+      <div class="price">$3,300/mo<span class="note">cut $200 on Oct 13; deposit one month</span></div>
+      <div class="chips"><span class="chip warn">Dog: Cats and small dogs, $250 deposit per pet</span><span class="chip ">Garage: 2-car</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/lake-4077-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/lake-4077-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/lake-4077-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/lake-4077-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2 ba</span><span>1,280 sq ft</span><span>Detached house</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Cats and small dogs, $250 deposit per pet</div><div class=""><b>Garage:</b> 2-car (per the listing)</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 0.9 mi Calavera</div><div class=""><b>Outdoor:</b> Private backyard</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Central AC, solar included and a Tesla charger</li><li>Carlsbad schools per the listing</li><li>12-month lease, 2.5x income</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Small dogs only, no weight limit stated</li><li>Listed on Zillow only, with no phone; message through the listing</li></ul>
+    <div class="links"><a href="https://www.zillow.com/homedetails/16621473_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">Owner via Zillow Rental Manager (message or request a tour)</div>
+  </div>
+</details>
+<details class="home " data-dogs="cbc" data-detached="1" data-now="0" id="glen-avon">
+  <summary>
+    <img class="thumb" src="photos/glen-avon-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Value</span>
+      <div class="addr">1445 Glen Avon Dr, San Marcos 92069</div>
+      <div class="area">Glen Avon Park, east San Marcos, 3.8 mi to San Elijo Hills</div>
+      <div class="price">$3,695/mo<span class="note">cut from $3,795 on Oct 6; deposit $3,695, $50 app fee</span></div>
+      <div class="chips"><span class="chip ">Dog: Up to 2 pets after pet screening and owner approval</span><span class="chip ">Garage: 2-car attached plus driveway</span><span class="chip ">Oct 24</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/glen-avon-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/glen-avon-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/glen-avon-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/glen-avon-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2 ba</span><span>1,446 sq ft</span><span>Detached single-story house on a 7,500 sq ft lot</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Up to 2 pets after pet screening and owner approval; breed restrictions may apply</div><div class=""><b>Garage:</b> 2-car attached plus driveway</div><div class=""><b>Available:</b> Oct 24</div><div class=""><b>Distance:</b> 3.8 mi San Elijo · 10.2 mi Calavera</div><div class=""><b>Outdoor:</b> Large backyard with lawn and patio</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Renovated: shaker cabinets, stone-look counters, farmhouse sink, stainless appliances</li><li>Francis Taylor Properties manages it; renters insurance required</li><li>No HOA</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Farthest east of the San Marcos picks</li><li>You must attend a showing before they process an application</li></ul>
+    <div class="links"><a href="https://francistaylorpm.appfolio.com/listings/detail/e89b5ab7-d1eb-4abc-829e-a88d76a28b74" target="_blank" rel="noopener">Francis Taylor Properties</a><a href="https://www.apartments.com/1445-glen-avon-dr-san-marcos-ca/4wbh2fj/" target="_blank" rel="noopener">Apartments.com</a></div>
+    <div class="contact">Francis Taylor Properties, (760) 400-9989</div>
+  </div>
+</details>
+<details class="home " data-dogs="unknown" data-detached="1" data-now="0" id="wasatch">
+  <summary>
+    <img class="thumb" src="photos/wasatch-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Big yard</span>
+      <div class="addr">905 Wasatch Pl, San Marcos 92069</div>
+      <div class="area">Richland, north San Marcos, 3.9 mi to San Elijo Hills</div>
+      <div class="price">$4,600/mo<span class="note">deposit $4,600</span></div>
+      <div class="chips"><span class="chip ">Dog: Dogs and cats listed, no size limit stated</span><span class="chip ">Garage: Attached, looks 2-car, long driveway</span><span class="chip ">Nov 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/wasatch-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd</span><span>2 ba</span><span>1,920 sq ft</span><span>Detached single-story house on a cul-de-sac corner lot</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Dogs and cats listed, no size limit stated</div><div class=""><b>Garage:</b> Attached, looks 2-car, long driveway</div><div class=""><b>Available:</b> Nov 1</div><div class=""><b>Distance:</b> 3.9 mi San Elijo · 9.4 mi Calavera</div><div class=""><b>Outdoor:</b> Fenced backyard with turf, covered patio and a backyard studio</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Largest single-story on the list with a dog-ready yard</li><li>Solar; washer and dryer included</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Right at the $4,600 ceiling</li><li>Side and back yard run along Richland Rd, a through street</li><li>Zillow and Trulia only; no phone published</li></ul>
+    <div class="links"><a href="https://www.zillow.com/homedetails/16665445_zpid/" target="_blank" rel="noopener">Zillow</a><a href="https://www.trulia.com/home/905-wasatch-pl-san-marcos-ca-92069-16665445" target="_blank" rel="noopener">Trulia</a></div>
+    <div class="contact">Trevor Anderson via Zillow Rental Manager</div>
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="1" data-now="1" id="elm-tree">
+  <summary>
+    <img class="thumb" src="photos/elm-tree-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">No HOA</span>
+      <div class="addr">4758 Elm Tree Dr, Oceanside 92056</div>
+      <div class="area">Peacock area, east Oceanside near Vista, 3.2 mi to Calavera Hills</div>
+      <div class="price">$3,900/mo<span class="note">gardener included, deposit $3,900</span></div>
+      <div class="chips"><span class="chip warn">Dog: Small pets considered individually</span><span class="chip ">Garage: 2-car attached with direct entry; washer and dryer inside</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/elm-tree-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/elm-tree-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/elm-tree-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/elm-tree-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2 ba</span><span>1,563 sq ft</span><span>Detached single-story 1986 house plus a den, 8,331 sq ft lot</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small pets considered individually</div><div class=""><b>Garage:</b> 2-car attached with direct entry; washer and dryer inside</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 3.2 mi Calavera · 8.0 mi San Elijo</div><div class=""><b>Outdoor:</b> Large walled backyard with patio, plus a private front yard</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Den works as a 4th bedroom or office</li><li>No HOA and no shared walls</li><li>12-month lease through a licensed broker</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Small pets only, with size, breed and number limits flagged in the MLS</li><li>No central AC listed</li></ul>
+    <div class="links"><a href="https://www.mlslistings.com/property/crpw26211347/4758-elm-tree-dr-oceanside-ca-92056/17980548" target="_blank" rel="noopener">MLSListings</a><a href="https://www.rent.com/r/4758-elm-tree-dr-oceanside-ca-lv3358013523" target="_blank" rel="noopener">Rent.com</a></div>
+    <div class="contact">Susan Paterson, broker, (949) 206-1778</div>
+  </div>
+</details>
+<details class="home " data-dogs="cbc" data-detached="1" data-now="1" id="bryan">
+  <summary>
+    <img class="thumb" src="photos/bryan-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Pool</span>
+      <div class="addr">4121 Bryan St, Oceanside 92056</div>
+      <div class="area">Oceanside 92056, 2.2 mi to Calavera Hills</div>
+      <div class="price">$4,300/mo<span class="note">gardener and pool service included; deposit $4,300 plus $250 to $500 per pet</span></div>
+      <div class="chips"><span class="chip ">Dog: One pet only, dog under 25 lb, owner approval</span><span class="chip ">Garage: 2-car attached with laundry hookups</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/bryan-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/bryan-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/bryan-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/bryan-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd</span><span>2 ba</span><span>1,603 sq ft</span><span>Detached single-story house</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> One pet only, dog under 25 lb, owner approval</div><div class=""><b>Garage:</b> 2-car attached with laundry hookups</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 2.2 mi Calavera · 8.2 mi San Elijo</div><div class=""><b>Outdoor:</b> Fully fenced backyard with a separately fenced pool and patio</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Chamberlain Property Management, an established Carlsbad firm</li><li>Pool and yard maintenance are in the rent</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>An application is already in process on the manager&#x27;s site</li><li>25 lb dog limit; no washer or dryer provided</li></ul>
+    <div class="links"><a href="https://www.cpmteam.com/property-listings/homes-and-condos/4121-Bryan-Street-Oceanside-CA-92056-305/" target="_blank" rel="noopener">Chamberlain PM</a><a href="https://www.zillow.com/homedetails/16608134_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">Chamberlain leasing, (760) 642-4663, leasing@cpmteam.com</div>
+  </div>
+</details>
+<details class="home " data-dogs="no" data-detached="1" data-now="1" id="via-del-caballo">
+  <summary>
+    <img class="thumb" src="photos/via-del-caballo-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Ask about dogs</span>
+      <div class="addr">514 Via Del Caballo, San Marcos 92078</div>
+      <div class="area">Gated Belleza community next to Cal State San Marcos, 2.3 mi to San Elijo Hills</div>
+      <div class="price">$3,850/mo<span class="note">cut $350 on Oct 10; HOA included; deposit $4,200</span></div>
+      <div class="chips"><span class="chip warn">Dog: Not stated on any source. Ask the broker</span><span class="chip ">Garage: 2-car attached with opener, plus driveway</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/via-del-caballo-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-del-caballo-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-del-caballo-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-del-caballo-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2.5 ba</span><span>1,909 sq ft</span><span>Detached 2-story house, built 2002</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Not stated on any source. Ask the broker.</div><div class=""><b>Garage:</b> 2-car attached with opener, plus driveway</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 2.3 mi San Elijo · 9.1 mi Calavera</div><div class=""><b>Outdoor:</b> Small lot that backs onto a grassy area; partially fenced</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>1,909 sq ft for $3,850 is the best space-per-dollar among the detached homes</li><li>Central AC, gas fireplace, all bedrooms upstairs</li><li>Gated community near the Sprinter station</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Pet policy is the deciding unknown</li><li>Lot is only 4,956 sq ft</li></ul>
+    <div class="links"><a href="https://www.mlslistings.com/property/crndp2609000/514-via-del-caballo-san-marcos-ca-92078/17981729" target="_blank" rel="noopener">MLSListings</a><a href="https://www.apartments.com/514-via-del-caballo-san-marcos-ca/hy0pch0/" target="_blank" rel="noopener">Apartments.com</a></div>
+    <div class="contact">Adam Peck, Torrey Pacific Properties, (760) 803-0973</div>
+  </div>
+</details>
+<details class="home " data-dogs="cbc" data-detached="1" data-now="1" id="la-campana">
+  <summary>
+    <img class="thumb" src="photos/la-campana-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Dog yard</span>
+      <div class="addr">3835 La Campana Ct, San Marcos 92078</div>
+      <div class="area">La Mirada, west San Marcos north of Hwy 78, 2.1 mi to San Elijo Hills</div>
+      <div class="price">$3,850/mo<span class="note">deposit $3,850; tenant pays all utilities</span></div>
+      <div class="chips"><span class="chip ">Dog: Pets negotiable on the manager&#x27;s listing</span><span class="chip ">Garage: 2-car, 10 ft deeper than standard</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/la-campana-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>1 ba</span><span>Detached single-story house on a cul-de-sac (about 900 sq ft)</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Pets negotiable on the manager&#x27;s listing</div><div class=""><b>Garage:</b> 2-car, 10 ft deeper than standard</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 2.1 mi San Elijo · 5.9 mi Calavera</div><div class=""><b>Outdoor:</b> Large fenced backyard with patio and sprinklers</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Completely remodeled: floors, windows, lighting, appliances, bath fixtures; washer and dryer included</li><li>Oversized garage for gear or a workshop</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Only one bathroom</li><li>Small house; square footage is not published</li></ul>
+    <div class="links"><a href="https://showmojo.com/l/117fa55095/3835-la-campana-court-san-marcos-ca-92078" target="_blank" rel="noopener">ShowMojo</a><a href="https://www.apartments.com/3835-la-campana-ct-san-marcos-ca/h8tmyy3/" target="_blank" rel="noopener">Apartments.com</a></div>
+    <div class="contact">Robert, Blue Diamond Sales and Rentals, (760) 465-1776</div>
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="1" data-now="1" id="arbor-glen-840">
+  <summary>
+    <img class="thumb" src="photos/arbor-glen-840-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Roomy</span>
+      <div class="addr">840 Arbor Glen Ln, Vista 92081</div>
+      <div class="area">Amber Woods in Shadowridge, between the two areas</div>
+      <div class="price">$4,325/mo<span class="note">deposit $4,325</span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs and other pets by approval</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/arbor-glen-840-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/arbor-glen-840-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/arbor-glen-840-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/arbor-glen-840-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>2.5 ba</span><span>2,004 sq ft</span><span>Detached 2-story house</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs and other pets by approval</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Now</div><div class=""><b>Distance:</b> 3.9 mi San Elijo · 4.7 mi Calavera</div><div class=""><b>Outdoor:</b> Large landscaped backyard, professionally maintained</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>2,004 sq ft with a granite island kitchen, central AC and a gas fireplace</li><li>Owner-listed with a phone number</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Small dogs only by approval</li><li>Zillow headline says 3 baths; it is 2.5</li></ul>
+    <div class="links"><a href="https://www.trulia.com/home/840-arbor-glen-ln-vista-ca-92081-99590811" target="_blank" rel="noopener">Trulia</a><a href="https://www.zillow.com/homedetails/99590811_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">Owner, (760) 653-5201</div>
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="1" data-now="0" id="rolling-hills">
+  <summary>
+    <img class="thumb" src="photos/rolling-hills-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Dec 1</span>
+      <div class="addr">343 Rolling Hills Ln, San Marcos 92069</div>
+      <div class="area">Richland, north-central San Marcos, 2.9 mi to San Elijo Hills</div>
+      <div class="price">$3,795/mo<span class="note">deposit $3,795</span></div>
+      <div class="chips"><span class="chip warn">Dog: Cats and small dogs</span><span class="chip ">Garage: 2-car attached with opener</span><span class="chip ">Dec 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/rolling-hills-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/rolling-hills-1.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd</span><span>3 ba</span><span>1,376 sq ft</span><span>Detached 2-story house, built 1986</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Cats and small dogs</div><div class=""><b>Garage:</b> 2-car attached with opener</div><div class=""><b>Available:</b> Dec 1</div><div class=""><b>Distance:</b> 2.9 mi San Elijo · 8.4 mi Calavera</div><div class=""><b>Outdoor:</b> Tiny lot (about 2,800 sq ft); community pool</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Listed Oct 12 on the MLS by a named agent, below Trulia&#x27;s rent estimate</li><li>Garage fridge included</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Little or no yard</li><li>Small dogs only; HOA pet rules apply</li></ul>
+    <div class="links"><a href="https://www.trulia.com/home/343-rolling-hills-ln-san-marcos-ca-92069-16666245" target="_blank" rel="noopener">Trulia</a><a href="https://www.realtor.com/rentals/details/343-Rolling-Hills-Ln_San-Marcos_CA_92069_M25365-97099" target="_blank" rel="noopener">Realtor.com</a></div>
+    <div class="contact">Ryan Jamieson, 360 Residential, (858) 212-1101</div>
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="1" data-now="0" id="gibraltar">
+  <summary>
+    <img class="thumb" src="photos/gibraltar-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Escondido</span>
+      <div class="addr">2185 Gibraltar Gln, Escondido 92029</div>
+      <div class="area">Southwest Escondido, 4.2 mi to San Elijo Hills</div>
+      <div class="price">$3,995/mo<span class="note">tenant pays utilities; extra pet deposit</span></div>
+      <div class="chips"><span class="chip warn">Dog: Trained small dogs and cats with extra deposit</span><span class="chip ">Garage: Attached, likely 2-car</span><span class="chip ">Dec 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/gibraltar-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd</span><span>2.5 ba</span><span>1,700 sq ft</span><span>Detached 2-story house, built 1989</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Trained small dogs and cats with extra deposit</div><div class=""><b>Garage:</b> Attached, likely 2-car</div><div class=""><b>Available:</b> Dec 1</div><div class=""><b>Distance:</b> 4.2 mi San Elijo · 11.8 mi Calavera</div><div class=""><b>Outdoor:</b> Backyard with BBQ and fire pit; fencing not stated</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>4 bedrooms under $4,000 with solar, central AC, washer and dryer</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>Owner says the photos are old</li><li>Farther out than the rest of the list</li></ul>
+    <div class="links"><a href="https://www.trulia.com/home/2185-gibraltar-gln-escondido-ca-92029-16701288" target="_blank" rel="noopener">Trulia</a><a href="https://www.zillow.com/homedetails/16701288_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">Owner via Zillow or Trulia</div>
+  </div>
+</details>
+<details class="home " data-dogs="no" data-detached="1" data-now="0" id="enchante-1316">
+  <summary>
+    <img class="thumb" src="photos/enchante-1316-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      <span class="badge alt">Unknown dogs</span>
+      <div class="addr">1316 Enchante Way, Oceanside 92056</div>
+      <div class="area">Ivey Ranch / Rancho Del Oro, 3.4 mi to Calavera Hills</div>
+      <div class="price">$4,600/mo<span class="note">fees, deposit and lease term not published</span></div>
+      <div class="chips"><span class="chip warn">Dog: Not stated anywhere we could read</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Oct 22</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/enchante-1316-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd</span><span>2.5 ba</span><span>2,446 sq ft</span><span>Detached 2-story house</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Not stated anywhere we could read</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Oct 22</div><div class=""><b>Distance:</b> 3.4 mi Calavera · 9.6 mi San Elijo</div><div class=""><b>Outdoor:</b> Walled and fenced backyard with a big patio</div></div>
+    <span class="lbl">Why it made the list</span><ul class="pts"><li>Biggest house on the list at 2,446 sq ft</li><li>Photos match the address</li></ul>
+    
+    <span class="lbl watch">Watch-outs</span><ul class="pts"><li>At the ceiling before any pet rent</li><li>Zillow only; ask about the dog before paying the application fee</li></ul>
+    <div class="links"><a href="https://www.zillow.com/homedetails/54704878_zpid/" target="_blank" rel="noopener">Zillow</a></div>
+    <div class="contact">Via the Zillow listing</div>
+  </div>
+</details></div></details>
+<details class="section" id="townhomes"><summary>Townhomes and attached homes with a garage<span class="count">23 of 23</span></summary><div class="section-body"><p class="intro">Not detached, but each has a real garage and a dog policy that is at least negotiable. Sorted by closeness to the two neighborhoods.</p><div class="empty">Nothing in this group matches the filters.</div>
+<details class="home " data-dogs="cbc" data-detached="0" data-now="1" id="cattail">
+  <summary>
+    <img class="thumb" src="photos/cattail-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1383 Cattail Ct, San Marcos 92078</div>
+      <div class="area">San Elijo Hills, walk to town center · 1.6 mi</div>
+      <div class="price">$3,995 incl. HOA<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Case by case, extra deposit</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/cattail-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/cattail-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/cattail-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/cattail-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 3.5 ba, 1,603 sq ft</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Case by case, extra deposit</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Now</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Mary Simmons-Maloney, eXp, (760) 855-1424. Bed and full bath on the entry level; short or long lease.</li></ul>
+    
+    <div class="links"><a href="https://www.mlslistings.com/property/crndp2608437/1383-cattail-ct-san-marcos-ca-92078/17949375" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="caprise">
+  <summary>
+    <img class="thumb" src="photos/caprise-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1175 Caprise Dr, San Marcos 92078</div>
+      <div class="area">San Elijo Hills, gated Springfield · 1.0 mi</div>
+      <div class="price">$3,695<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Nov 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/caprise-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/caprise-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/caprise-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/caprise-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2 ba, 1,342 sq ft, 3 levels</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Nov 1</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Remodeled kitchen, community pool. Balcony, no yard.</li></ul>
+    
+    <div class="links"><a href="https://www.zillow.com/homedetails/60551921_zpid/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="spindle">
+  <summary>
+    <img class="thumb" src="photos/spindle-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">557 Spindle Way, San Marcos 92078</div>
+      <div class="area">Hill District at North City, by Cal State San Marcos · 1.5 mi</div>
+      <div class="price">$4,395 + $50 pet rent<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Up to 2 pets considered</span><span class="chip ">Garage: 2-car attached, EV-ready</span><span class="chip ">Nov 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/spindle-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/spindle-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/spindle-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd / 3.5 ba, 1,895 sq ft, brand new, 3 levels</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Up to 2 pets considered; policy field says small</div><div class=""><b>Garage:</b> 2-car attached, EV-ready</div><div class=""><b>Available:</b> Nov 1</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Never lived in; owned solar, all-electric. Only renderings for interior photos, so tour it.</li></ul>
+    
+    <div class="links"><a href="https://www.trulia.com/home/557-spindle-way-san-marcos-ca-92078-465750596" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="durango-2295">
+  <summary>
+    <img class="thumb" src="photos/durango-2295-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">2295 Durango Way, San Marcos 92078</div>
+      <div class="area">Laurel at Old Creek Ranch · 2.1 mi</div>
+      <div class="price">$4,300<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: Attached</span><span class="chip ">Dec 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/durango-2295-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/durango-2295-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/durango-2295-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba + loft, 1,775 sq ft, corner unit</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> Attached (size not stated)</div><div class=""><b>Available:</b> Dec 1 (listing field says now)</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Small fenced paver patio. Landlord will consider a 6-month lease.</li></ul>
+    
+    <div class="links"><a href="https://www.trulia.com/home/2295-durango-way-san-marcos-ca-92078-120796541" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="via-trato">
+  <summary>
+    <img class="thumb" src="photos/via-trato-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">6232 Via Trato, Carlsbad 92009</div>
+      <div class="area">Cascada at Rancho Carrillo · 2.7 mi to San Elijo</div>
+      <div class="price">$3,850<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Oct 19</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/via-trato-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-trato-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-trato-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-trato-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 3 ba + den, 1,292 sq ft, multi-level</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Oct 19</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Harcourts Avanti PM, (760) 412-5661. 700+ credit, 3x income.</li></ul>
+    
+    <div class="links"><a href="https://avantihome.appfolio.com/listings/detail/58d3da09-7bdc-473b-9d05-51f4420a5b46" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="cbc" data-detached="0" data-now="1" id="avenida-christina">
+  <summary>
+    <img class="thumb" src="photos/avenida-christina-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">3036 Avenida Christina, Carlsbad 92009</div>
+      <div class="area">Meadowridge, south Carlsbad · 2.7 mi to San Elijo</div>
+      <div class="price">$3,795, water incl.<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Pets considered</span><span class="chip ">Garage: 1-car attached + assigned space</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/avenida-christina-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/avenida-christina-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/avenida-christina-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,350 sq ft, end unit</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Pets considered</div><div class=""><b>Garage:</b> 1-car attached + assigned space</div><div class=""><b>Available:</b> Now</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>(760) 407-3998. Do not confuse with 3060 Avenida Christina, which takes no pets.</li></ul>
+    
+    <div class="links"><a href="https://www.apartmentguide.com/rent/3036-Avenida-Christina-Carlsbad-CA-LV3350032922/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="avenida-christina-3042">
+  <summary>
+    <img class="thumb" src="photos/avenida-christina-3042-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">3042 Avenida Christina, Carlsbad 92009</div>
+      <div class="area">Meadowridge, south Carlsbad · 2.7 mi to San Elijo</div>
+      <div class="price">$3,850<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs</span><span class="chip ">Garage: Attached + driveway + assigned space</span><span class="chip ">Dec 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/avenida-christina-3042-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/avenida-christina-3042-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/avenida-christina-3042-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,351 sq ft, 2 levels</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs</div><div class=""><b>Garage:</b> Attached + driveway + assigned space</div><div class=""><b>Available:</b> Dec 1</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Listed Oct 9 by Charnholm and Associates. Owner pays HOA; two patios, no yard.</li></ul>
+    
+    <div class="links"><a href="https://www.trulia.com/home/3042-avenida-christina-carlsbad-ca-92009-16674728" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="rancho-brida">
+  <summary>
+    <img class="thumb" src="photos/rancho-brida-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">6106 Rancho Brida, Carlsbad 92009</div>
+      <div class="area">Rancho Carrillo · 3.4 mi to San Elijo</div>
+      <div class="price">$3,500<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Dec 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/rancho-brida-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/rancho-brida-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/rancho-brida-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/rancho-brida-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2 ba, 1,044 sq ft</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Dec 1</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Owner-managed, (858) 610-9015. 700+ credit. Tight on space.</li></ul>
+    
+    <div class="links"><a href="https://rental.turbotenant.com/p/6106-rancho-brida-carlsbad-ca/af480baa-2bbe-45fe-a9f2-669cd00089c1" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="cbc" data-detached="0" data-now="0" id="luciernaga">
+  <summary>
+    <img class="thumb" src="photos/luciernaga-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">2622 Luciernaga St, Carlsbad 92009</div>
+      <div class="area">La Costa, twin home · 3.6 mi to San Elijo</div>
+      <div class="price">$4,400<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Owner and insurance approval, extra deposit and rent</span><span class="chip ">Garage: 2-car attached + driveway</span><span class="chip ">Nov 30</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/luciernaga-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/luciernaga-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/luciernaga-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/luciernaga-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,541 sq ft</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Owner and insurance approval, extra deposit and rent</div><div class=""><b>Garage:</b> 2-car attached + driveway</div><div class=""><b>Available:</b> Nov 30</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Keymara Rentals, (760) 523-9572. Large front and back yards, balconies off each bedroom; rent may rise after Mar 2027.</li></ul>
+    
+    <div class="links"><a href="https://socalkeymararentals.appfolio.com/listings/detail/abf1d08c-4a60-4c95-a5c7-de40ad8cc614" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="cbc" data-detached="0" data-now="0" id="luciernaga-pl-6718">
+  <summary>
+    <img class="thumb" src="photos/luciernaga-pl-6718-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">6718 Luciernaga Pl, Carlsbad 92009</div>
+      <div class="area">La Costa, duplex half · 3.6 mi to San Elijo</div>
+      <div class="price">$4,400, gardener incl.<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Negotiable with extra deposit</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Oct 15</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/luciernaga-pl-6718-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/luciernaga-pl-6718-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/luciernaga-pl-6718-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,776 sq ft</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Negotiable with extra deposit (dogs allowed flag)</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Oct 15</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Hunter Properties, (760) 436-5700. Large fenced yard with covered patio.</li></ul>
+    
+    <div class="links"><a href="https://hunterproperties.appfolio.com/listings/detail/a81568d5-8e4a-4352-827b-5d78f85d0e45" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="1" id="verano-2442">
+  <summary>
+    <img class="thumb" src="photos/verano-2442-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">2442 Verano Way, Vista 92081</div>
+      <div class="area">Carlsbad/San Marcos border near Bressi Ranch · 2.4 mi to San Elijo</div>
+      <div class="price">$3,695<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: &quot;Small fur babies&quot; with approval</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/verano-2442-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/verano-2442-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/verano-2442-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd / 3.5 ba, 1,856 sq ft, end unit built 2020</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> &quot;Small fur babies&quot; with approval</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Now</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Anonymous Craigslist lister; verify ownership before paying anything.</li></ul>
+    
+    <div class="links"><a href="https://sandiego.craigslist.org/nsd/apa/d/vista-modern-townhome-built-carlsbad/7978678707.html" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="yes" data-detached="0" data-now="0" id="sunrise-vw">
+  <summary>
+    <img class="thumb" src="photos/sunrise-vw-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1219 Sunrise Vw #103, San Marcos 92078</div>
+      <div class="area">Sunrise at San Marcos, east side by Hwy 78 · 3.4 mi</div>
+      <div class="price">$4,499<span class="note"></span></div>
+      <div class="chips"><span class="chip ok">Dog: Yes, any size</span><span class="chip ">Garage: 2-car attached + 2-car driveway</span><span class="chip ">Oct 20</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/sunrise-vw-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd / 3.5 ba, 1,911 sq ft, 3 levels</span></div>
+    <div class="facts"><div class="good"><b>Dog:</b> Yes, any size ($500 fee)</div><div class=""><b>Garage:</b> 2-car attached + 2-car driveway</div><div class=""><b>Available:</b> Oct 20</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Rise Realty, (858) 330-3166. Owner pays HOA; solar. Deck, no yard.</li></ul>
+    
+    <div class="links"><a href="https://www.zillow.com/homedetails/457352192_zpid/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="sunrise-vw-1224">
+  <summary>
+    <img class="thumb" src="photos/sunrise-vw-1224-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1224 Sunrise Vw #102, San Marcos 92078</div>
+      <div class="area">Sunrise at San Marcos · 3.4 mi</div>
+      <div class="price">$3,600 + $50 trash + $50 pet rent<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: 2-car attached, EV</span><span class="chip ">Nov 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/sunrise-vw-1224-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/sunrise-vw-1224-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/sunrise-vw-1224-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 3 ba, 1,501 sq ft, built 2022</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> 2-car attached, EV</div><div class=""><b>Available:</b> Nov 1</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Each bedroom has its own bath. Deck only.</li></ul>
+    
+    <div class="links"><a href="https://www.trulia.com/home/1224-sunrise-vw-102-san-marcos-ca-92078-465934324" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="1" id="fitzpatrick">
+  <summary>
+    <img class="thumb" src="photos/fitzpatrick-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">455 Fitzpatrick Rd #102, San Marcos 92069</div>
+      <div class="area">Viewpointe Commons near CSUSM · 2.4 mi</div>
+      <div class="price">$3,600<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: One small dog</span><span class="chip ">Garage: 2-car</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/fitzpatrick-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,455 sq ft, 3 levels</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> One small dog; no cats</div><div class=""><b>Garage:</b> 2-car</div><div class=""><b>Available:</b> Now</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Golden Key Properties, (760) 729-1777 x113. Solar; strict HOA parking rules.</li></ul>
+    
+    <div class="links"><a href="https://goldenkeyprop.appfolio.com/listings/detail/b8598086-b6fc-4d39-b311-9a8cb0b89284" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="mission-villas">
+  <summary>
+    <img class="thumb" src="photos/mission-villas-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">149 Mission Villas Rd, San Marcos 92069</div>
+      <div class="area">Mission Villas, central San Marcos · 2.5 mi</div>
+      <div class="price">$3,675<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Dec 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/mission-villas-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,301 sq ft</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Dec 1</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Owned solar, hill views from the balcony.</li></ul>
+    
+    <div class="links"><a href="https://www.trulia.com/home/149-mission-villas-rd-san-marcos-ca-92069-442182101" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="1" id="carrie">
+  <summary>
+    <img class="thumb" src="photos/carrie-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">563 Carrie Cir, San Marcos 92069</div>
+      <div class="area">Richmar, central San Marcos · 2.7 mi</div>
+      <div class="price">$3,500<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: Attached, likely 2-car</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/carrie-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2 ba, 1,394 sq ft, 1970s attached pair</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> Attached, likely 2-car</div><div class=""><b>Available:</b> Now</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>33 Property Management. No washer or dryer.</li></ul>
+    
+    <div class="links"><a href="https://www.trulia.com/home/563-carrie-cir-san-marcos-ca-92069-16669923" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="moonlight">
+  <summary>
+    <img class="thumb" src="photos/moonlight-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">558 Moonlight Dr, San Marcos 92069</div>
+      <div class="area">Mission Grove, Richland · 3.1 mi</div>
+      <div class="price">$4,050 + $50 pet rent<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs only</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Oct 23</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/moonlight-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/moonlight-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/moonlight-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,685 sq ft, built 2016</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs only</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Oct 23</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Owner-managed. Small paver patio backing to a greenbelt; heated community pool.</li></ul>
+    
+    <div class="links"><a href="https://www.rentler.com/places-for-rent/ca/san-marcos/558-moonlight-dr/8457103" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="cbc" data-detached="0" data-now="0" id="via-roberto">
+  <summary>
+    <img class="thumb" src="photos/via-roberto-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">2707 Via Roberto, Carlsbad 92010</div>
+      <div class="area">Tiburon, next to Calavera Hills · 1.1 mi to Calavera</div>
+      <div class="price">$3,950 (text says $3,995) + $40 pet rent<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Allowed with owner approval</span><span class="chip ">Garage: 2-car, detached</span><span class="chip ">Nov 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/via-roberto-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-roberto-1.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,452 sq ft condo</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Allowed with owner approval</div><div class=""><b>Garage:</b> 2-car, detached</div><div class=""><b>Available:</b> Nov 1</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Newly remodeled, but no interior photos posted yet. Private patio.</li></ul>
+    
+    <div class="links"><a href="https://www.zillow.com/homedetails/16619230_zpid/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="via-astuto">
+  <summary>
+    <img class="thumb" src="photos/via-astuto-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">2518 Via Astuto, Carlsbad 92010</div>
+      <div class="area">Tamarack Point · 1.3 mi to Calavera</div>
+      <div class="price">$3,700<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs</span><span class="chip ">Garage: 2-car, detached</span><span class="chip ">Not stated</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/via-astuto-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-astuto-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-astuto-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2 ba, 1,104 sq ft, single-level end unit</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs</div><div class=""><b>Garage:</b> 2-car, detached</div><div class=""><b>Available:</b> Not stated</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Owner-listed on Zillow; cut from $3,800 in August.</li></ul>
+    
+    <div class="links"><a href="https://www.zillow.com/homedetails/16619239_zpid/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="unknown" data-detached="0" data-now="1" id="cameo">
+  <summary>
+    <img class="thumb" src="photos/cameo-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">3541 Cameo Dr, Oceanside 92056</div>
+      <div class="area">Palmilla del Oro, gated · 1.4 mi to Calavera</div>
+      <div class="price">$3,495<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Dogs and cats allowed</span><span class="chip ">Garage: 1-car detached + 1 space</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/cameo-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/cameo-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/cameo-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2 ba, 1,141 sq ft condo</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Dogs and cats allowed</div><div class=""><b>Garage:</b> 1-car detached + 1 space</div><div class=""><b>Available:</b> Now</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Collin Johnson, RE/MAX One, (818) 667-2151. Pool and spa; no yard.</li></ul>
+    
+    <div class="links"><a href="https://www.mlslistings.com/property/crsr26197053/3541-cameo-oceanside-ca-92056/17948795" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="unknown" data-detached="0" data-now="0" id="anden">
+  <summary>
+    <img class="thumb" src="photos/anden-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">Anden, 152 N Twin Oaks Valley Rd, San Marcos 92069</div>
+      <div class="area">Central San Marcos near Hwy 78 · 2.1 mi</div>
+      <div class="price">about $4,480 total, varies by lease<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Up to 2 pets, $500 deposit + $50/mo each</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Oct 14 and Nov 11</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/anden-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/anden-1.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 3 ba, 1,486 sq ft new townhomes</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Up to 2 pets, $500 deposit + $50/mo each</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Oct 14 and Nov 11</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Greystar leasing office, (760) 374-8480. Dog park on site; price jumps on shorter leases.</li></ul>
+    
+    <div class="links"><a href="https://www.andensanmarcos.com/floor-plans/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="montura">
+  <summary>
+    <img class="thumb" src="photos/montura-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1134 Montura Rd, San Marcos 92078</div>
+      <div class="area">Lake San Marcos · 1.9 mi</div>
+      <div class="price">$4,400 + $100 pet rent<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: 2-car attached + driveway</span><span class="chip ">Oct 15</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/montura-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/montura-1.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>5 bd / 2 ba, top unit of a duplex</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> 2-car attached + driveway</div><div class=""><b>Available:</b> Oct 15</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Karen Richardson, (760) 280-9008. Fenced yard and deck, but a separate tenant lives downstairs.</li></ul>
+    
+    <div class="links"><a href="https://www.trulia.com/home/1134-montura-rd-san-marcos-ca-92078-440912303" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="yes" data-detached="0" data-now="0" id="palo-verde">
+  <summary>
+    <img class="thumb" src="photos/palo-verde-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1362 Palo Verde Way, Vista 92083</div>
+      <div class="area">Sierra community off S. Santa Fe near Hwy 78 · 4.5 mi Calavera, 5.3 mi San Elijo</div>
+      <div class="price">$3,795 + $46 fee + $75 pet rent<span class="note"></span></div>
+      <div class="chips"><span class="chip ok">Dog: Yes, no size limit</span><span class="chip ">Garage: 2-car attached, EV charger</span><span class="chip ">Oct 26</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/palo-verde-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/palo-verde-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/palo-verde-2.jpg" alt="" loading="lazy" decoding="async"><img src="photos/palo-verde-3.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,679 sq ft, built 2019</span></div>
+    <div class="facts"><div class="good"><b>Dog:</b> Yes, no size limit ($500 pet deposit)</div><div class=""><b>Garage:</b> 2-car attached, EV charger</div><div class=""><b>Available:</b> Oct 26</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Uplift Property Management, (858) 449-7294. Paved patio only, no yard.</li></ul>
+    
+    <div class="links"><a href="https://upliftpm.com/available-properties/3-bedroom-home-with-open-floor-plan-private-patio-2-car-garage/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details></div></details>
+<details class="section" id="catch"><summary>Over budget or with a catch<span class="count">6 of 6</span></summary><div class="section-body"><p class="intro">Worth a look only if the catch does not matter to you.</p><div class="empty">Nothing in this group matches the filters.</div>
+<details class="home " data-dogs="cbc" data-detached="0" data-now="1" id="via-primero">
+  <summary>
+    <img class="thumb" src="photos/via-primero-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1870 Via Primero, Oceanside 92056</div>
+      <div class="area">Rancho Del Oro · 2.8 mi to Calavera</div>
+      <div class="price over">$4,600 all-in ($4,200 + $400 utilities)<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Case by case, $25/mo each</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/via-primero-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd / 2 ba, 1,749 sq ft single-story</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> Case by case, $25/mo each</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Now</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>One of two houses plus a new ADU on a shared lot; deposit is $8,400. Fenced yard; owner meets the dog.</li></ul>
+    
+    <div class="links"><a href="https://www.rent.com/r/1870-via-primero-oceanside-ca-lv3373220896" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="unknown" data-detached="0" data-now="0" id="wingwood-1515">
+  <summary>
+    <img class="thumb" src="photos/wingwood-1515-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1515 Wingwood Ln #1, Vista 92083</div>
+      <div class="area">Harveston Ranch by Hwy 78 · 4.8 mi to Calavera</div>
+      <div class="price over">$4,350<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: Unknown</span><span class="chip ">Garage: 2-car attached</span><span class="chip ">Nov 1</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/wingwood-1515-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/wingwood-1515-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/wingwood-1515-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd / 3 ba + loft, 2,132 sq ft, built 2024</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Unknown</div><div class=""><b>Garage:</b> 2-car attached</div><div class=""><b>Available:</b> Nov 1</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Also listed for sale at $1.05M, so it could sell mid-lease. Turf yard, paid-off solar.</li></ul>
+    
+    <div class="links"><a href="https://www.zillow.com/homedetails/459539445_zpid/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="yes" data-detached="0" data-now="1" id="passion-ct">
+  <summary>
+    <img class="thumb" src="photos/passion-ct-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">711 Passion Ct, Vista 92083</div>
+      <div class="area">Northwest Vista near Oceanside · 2.8 mi to Calavera</div>
+      <div class="price over">$4,500 + water/sewer/trash<span class="note"></span></div>
+      <div class="chips"><span class="chip ok">Dog: Yes, subject to approval</span><span class="chip ">Garage: Attached, likely 1-car</span><span class="chip ">Now</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/passion-ct-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/passion-ct-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/passion-ct-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>4 bd / 3 ba + den, 2,060 sq ft, brand new</span></div>
+    <div class="facts"><div class="good"><b>Dog:</b> Yes, subject to approval</div><div class=""><b>Garage:</b> Attached, likely 1-car</div><div class=""><b>Available:</b> Now</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>HeetWave Properties, (858) 769-3744. A separately rented ADU sits above the garage. Photos are representative, not this unit.</li></ul>
+    
+    <div class="links"><a href="https://heetwaveproperties.appfolio.com/listings/detail/e8a55bbb-3cb7-4bd4-9d60-78f9723ef471" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="cbc" data-detached="0" data-now="0" id="san-pablo">
+  <summary>
+    <img class="thumb" src="photos/san-pablo-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1502 San Pablo Dr, San Marcos 92078</div>
+      <div class="area">Lake San Marcos, on St Marks golf course · 1.1 mi</div>
+      <div class="price over">$4,500<span class="note"></span></div>
+      <div class="chips"><span class="chip ">Dog: One dog under 20 lb considered</span><span class="chip ">Garage: 2-car</span><span class="chip ">Nov 7</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/san-pablo-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 2,600 sq ft single-story</span></div>
+    <div class="facts"><div class=""><b>Dog:</b> One dog under 20 lb considered</div><div class=""><b>Garage:</b> 2-car</div><div class=""><b>Available:</b> Nov 7</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Jacque Baker Real Estate. Huge sunroom, private yard; owner pays HOA and gardener.</li></ul>
+    
+    <div class="links"><a href="https://www.zillow.com/homedetails/16673874_zpid/" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="0" id="terraza-portico">
+  <summary>
+    <img class="thumb" src="photos/terraza-portico-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">6432 Terraza Portico, Carlsbad 92009</div>
+      <div class="area">Portico at Rancho Carrillo, gated · 2.6 mi to San Elijo</div>
+      <div class="price over">$4,725<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: One small pet with approval</span><span class="chip ">Garage: 2-car attached + EV carport</span><span class="chip ">Oct 17</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/terraza-portico-0.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>3 bd / 2.5 ba, 1,410 sq ft townhome</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> One small pet with approval</div><div class=""><b>Garage:</b> 2-car attached + EV carport</div><div class=""><b>Available:</b> Oct 17</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Pacific Investment Properties, (619) 935-3920. Renovated; two pools.</li></ul>
+    
+    <div class="links"><a href="https://www.trulia.com/home/6432-terraza-portico-carlsbad-ca-92009-54903466" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details>
+<details class="home " data-dogs="small" data-detached="0" data-now="1" id="via-inspirar">
+  <summary>
+    <img class="thumb" src="photos/via-inspirar-thumb.jpg" alt="" loading="lazy" decoding="async">
+    <div class="sum">
+      
+      <div class="addr">1688 Via Inspirar, San Marcos 92078</div>
+      <div class="area">Panorama at Lake San Marcos · 1.6 mi</div>
+      <div class="price over">$4,000 (cut from $5,000)<span class="note"></span></div>
+      <div class="chips"><span class="chip warn">Dog: Small dogs, cats</span><span class="chip ">Garage: 2-car detached</span><span class="chip ">Now, 30-day minimum</span></div>
+    </div>
+  </summary>
+  <div class="body">
+    <div class="photos"><img src="photos/via-inspirar-0.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-inspirar-1.jpg" alt="" loading="lazy" decoding="async"><img src="photos/via-inspirar-2.jpg" alt="" loading="lazy" decoding="async"></div>
+    <div class="specs"><span>2 bd + den / 2 ba, 1,204 sq ft condo</span></div>
+    <div class="facts"><div class="warn"><b>Dog:</b> Small dogs, cats</div><div class=""><b>Garage:</b> 2-car detached</div><div class=""><b>Available:</b> Now, 30-day minimum</div></div>
+    
+    <span class="lbl">Notes</span><ul class="pts"><li>Virginia Dent, Harcourts JADE, (760) 310-2285. Lake views; really a 2-bedroom.</li></ul>
+    
+    <div class="links"><a href="https://www.mlslistings.com/property/crndp2604438/1688-via-inspirar-san-marcos-ca-92078/17675180" target="_blank" rel="noopener">Open listing</a></div>
+    
+  </div>
+</details></div></details>
+<details class="section" id="ruled"><summary>Checked and ruled out<span class="count">59</span></summary><div class="section-body"><p class="intro">So nobody wastes time re-finding these.</p><div class="tablewrap"><table><tr><th>Listing</th><th>Rent</th><th>Why not</th></tr><tr><td>3511 Providence Ln, Carlsbad (condo, 1-car garage)</td><td>$3,595</td><td>No pets</td></tr><tr><td>3128 Nala Way, Carlsbad (townhome)</td><td>$4,288</td><td>No pets</td></tr><tr><td>2614 Via Masada, Carlsbad</td><td>$3,800</td><td>No pets</td></tr><tr><td>3033 Via Sabinas, Carlsbad (townhome)</td><td>$3,995</td><td>No pets</td></tr><tr><td>2724 Grove Ave, Carlsbad</td><td>$4,400</td><td>No pets</td></tr><tr><td>3239 San Helena Dr, Oceanside</td><td>$3,500</td><td>No pets; month to month</td></tr><tr><td>2717 Candlewood Pl, Oceanside</td><td>$4,100</td><td>No pets (manager&#x27;s own listing)</td></tr><tr><td>1351 Enchante Way, Oceanside</td><td>$4,500</td><td>No pets</td></tr><tr><td>2117 Via Sonora, Oceanside (townhome)</td><td>$3,850</td><td>No pets</td></tr><tr><td>5312 Mead St, Oceanside</td><td>$3,895</td><td>No pets</td></tr><tr><td>3264 Noya Way, Oceanside</td><td>$4,600</td><td>No pets</td></tr><tr><td>1872 Teakwood Way, Vista</td><td>$4,100</td><td>No pets</td></tr><tr><td>2327 Verano Way, Vista (townhome)</td><td>$3,795</td><td>No pets</td></tr><tr><td>2081 Fairhope Loop, Vista</td><td>$3,700</td><td>No pets</td></tr><tr><td>1839 Olympus Loop Dr, Vista</td><td>$4,395</td><td>Assistance dogs only</td></tr><tr><td>790 Arbor Glen Ln, Vista</td><td>$4,495</td><td>No pets</td></tr><tr><td>1355 Sky Ridge Ct, San Marcos (San Elijo Hills townhome)</td><td>$3,900</td><td>No pets</td></tr><tr><td>731 Kellogg St, San Marcos (townhome)</td><td>$3,680</td><td>No pets</td></tr><tr><td>564 Almond Rd, San Marcos (townhome)</td><td>$3,500</td><td>No pets</td></tr><tr><td>2232 Indus Way, San Marcos (townhome)</td><td>$3,700</td><td>No pets</td></tr><tr><td>2134 Silverado St, San Marcos (townhome)</td><td>$3,995</td><td>No pets</td></tr><tr><td>380 Beaker Rd, San Marcos (new townhome)</td><td>$4,150</td><td>No pets</td></tr><tr><td>485 Village Greens Way, San Marcos (new house)</td><td>$4,500</td><td>No dogs on the manager&#x27;s listing</td></tr><tr><td>217 Vineyard Ct, San Marcos</td><td>$3,998</td><td>No pets</td></tr><tr><td>321 Mission Terrace Ave, San Marcos</td><td>$3,600</td><td>No pets</td></tr><tr><td>476 Prosperity Dr, San Marcos (townhome)</td><td>$3,800</td><td>No pets</td></tr><tr><td>2407 Sentinel Ln, San Marcos (townhome)</td><td>$3,800</td><td>No pets</td></tr><tr><td>787 Kirkwall Dr, San Marcos</td><td>$4,050</td><td>No pets</td></tr><tr><td>1160 Via Camellia, San Marcos</td><td>$4,195</td><td>No pets</td></tr><tr><td>1015 Sparrow Ct, San Marcos (San Elijo Hills area, pool)</td><td>$4,700</td><td>No pets, and over budget</td></tr><tr><td>3309 Faye Dr, San Marcos (new townhome by San Elijo Hills)</td><td>$4,650</td><td>No pets, and over budget</td></tr><tr><td>2825 Unicornio St, Carlsbad (townhome)</td><td>$3,600</td><td>No pets</td></tr><tr><td>7821 Quebrada Cir, Carlsbad</td><td>$4,280</td><td>No-pet policy</td></tr><tr><td>2892 Sanford Ln, Carlsbad (townhome)</td><td>$4,150</td><td>No garage, one assigned space</td></tr><tr><td>2505 Navarra Dr, Carlsbad</td><td>$4,200</td><td>No garage, one reserved space</td></tr><tr><td>4864 Alondra Way, Carlsbad</td><td>$3,750</td><td>ADU, no garage</td></tr><tr><td>2490 Birchwood Way, Oceanside</td><td>$3,495</td><td>ADU, no garage, month to month</td></tr><tr><td>1640 S Tremont St, Oceanside</td><td>$3,198</td><td>Half duplex, street parking only</td></tr><tr><td>2327 Maxson St, Oceanside</td><td>$3,000</td><td>Part of a house (2 bd / 1 ba), no garage</td></tr><tr><td>1475 Pine Heights Way, San Marcos</td><td>$3,900</td><td>Carport only</td></tr><tr><td>2605 1/2 Kauana Loa Dr, Escondido</td><td>$3,795</td><td>Second unit, no garage</td></tr><tr><td>2410 La Costa Ave, Carlsbad</td><td>$4,900</td><td>Furnished ADU, street parking</td></tr><tr><td>1255 Rhea Pl, Vista</td><td>$3,595</td><td>ADU, no garage</td></tr><tr><td>263 Hannalei Dr, Vista</td><td>$3,700</td><td>ADU, no garage</td></tr><tr><td>211 Civic Center Dr, Vista</td><td>$3,600</td><td>Carport only</td></tr><tr><td>1633 Calle Las Casas, Oceanside (Rancho Del Oro)</td><td>$4,500</td><td>Leased Aug 27; manager&#x27;s page is stale</td></tr><tr><td>1559 Madrid Dr, Vista (Shadowridge)</td><td>$3,900</td><td>Marked rented on the manager&#x27;s site</td></tr><tr><td>1413 Janis Lynn Ln, Vista (townhome)</td><td>$3,550</td><td>Gone from the manager&#x27;s site; feeds lag</td></tr><tr><td>2438 Sentinel Ln, San Marcos (townhome)</td><td>$3,795</td><td>Gone from Broadpoint&#x27;s site; likely rented</td></tr><tr><td>2152 Silverado St, San Marcos (townhome)</td><td>$3,800</td><td>Unverifiable: one photo, manager not findable</td></tr><tr><td>1106 Via Lucero, Oceanside (townhome)</td><td>$4,250</td><td>Cats only</td></tr><tr><td>1190 Elfin Forest Rd W #1, San Marcos (San Elijo Hills townhome)</td><td>$3,895</td><td>Taken off the market Oct 8</td></tr><tr><td>2346 Sentinel Ln, San Marcos (townhome)</td><td>$3,725</td><td>Rented</td></tr><tr><td>2158 Savona Ct, Vista</td><td>$3,400</td><td>Rented</td></tr><tr><td>640 Sonoma St, San Marcos</td><td>$4,200</td><td>Rented</td></tr><tr><td>1500 Via Dorado, San Marcos</td><td>$3,995</td><td>Rented</td></tr><tr><td>7936 Calle Posada, Carlsbad</td><td>$4,500</td><td>Rented</td></tr><tr><td>1158 Oak Ave and 1956 Palmer Dr</td><td>$3,500 / $4,200</td><td>Rented (and carport only / no pets)</td></tr><tr><td>13 Apartments.com search cards (e.g. 2995 Lexington Cir, 1184 Caprise Dr, 421 Camino Hermoso, 2910 Pearl Pl)</td><td></td><td>No live listing found on any source; likely stale</td></tr></table></div></div></details>
+<details class="section tips" id="tips"><summary>Before you call</summary><div class="section-body"><ul><li>Dog size decides about half of this list. Call with the dog&#x27;s breed and weight first; none of the &quot;small dogs&quot; listings publish a cutoff, and three of them (Hampton Rd, Durango Way, Saratoga Ct) contradict themselves between the text and the pet field.</li><li>Expect a deposit equal to one month, a $35 to $55 application fee per adult, 2.5x to 3x income, and 620+ to 700+ credit. Where pet terms were published they ran $250 to $500 one-time and $25 to $100 a month.</li><li>Houses near Calavera Hills under $4,600 are almost all in Oceanside 92056 on the Carlsbad line (Tri-City), and several are still zoned for Carlsbad schools. Inside San Elijo Hills itself, only one detached house (Chert Dr) and two townhomes (Cattail Ct, Caprise Dr) were in budget on Oct 13.</li><li>Move quickly on Mira Costa, both Lake Blvd houses and Genine Dr: all are available now and priced at or under their rent estimates. Bryan St already has an application in process.</li><li>Several homes are listed only on Zillow with no phone number. Use Request a tour, and ask who owns or manages the home before paying any fee. Never pay a deposit before seeing the inside in person.</li><li>Prices moved during the day this was researched (three cuts on Oct 10 to 13). Re-open the links before calling; a listing that is gone was probably rented, not pulled.</li></ul><div class="method">Sources swept on Oct 13, 2026: Zillow, Trulia, Apartments.com, Craigslist, Redfin, Zumper, HotPads, Realtor.com, Homes.com, MLSListings, RentCafe, Rentler and the listing pages of about 60 North County property managers. 198 Zillow results inside a box from Oceanside to Escondido were cross-checked with the other sources; 105 candidates were then verified one by one for status, dog policy and garage. Straight-line distances are measured to Calavera Hills Community Park (Carlsbad) and San Elijo Hills Town Center (San Marcos).</div></div></details>
+</div><script>
+(function(){
+  var state = {dogs:false, detached:false, now:false};
+  var btns = document.querySelectorAll('.filters button[data-f]');
+  function apply(){
+    document.querySelectorAll('details.home').forEach(function(h){
+      var hide = false;
+      if (state.dogs && h.dataset.dogs !== 'yes' && h.dataset.dogs !== 'cbc') hide = true;
+      if (state.detached && h.dataset.detached !== '1') hide = true;
+      if (state.now && h.dataset.now !== '1') hide = true;
+      h.classList.toggle('hidden-by-filter', hide);
+    });
+    document.querySelectorAll('details.section').forEach(function(s){
+      var homes = s.querySelectorAll('details.home');
+      if (!homes.length) return;
+      var vis = s.querySelectorAll('details.home:not(.hidden-by-filter)').length;
+      var c = s.querySelector('.count'); if (c) c.textContent = vis + ' of ' + homes.length;
+      var e = s.querySelector('.empty'); if (e) e.style.display = vis ? 'none' : 'block';
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var k = b.dataset.f; state[k] = !state[k];
+      b.setAttribute('aria-pressed', state[k] ? 'true' : 'false');
+      apply();
+    });
+  });
+  apply();
+})();
+</script>
+</body>
+</html>
